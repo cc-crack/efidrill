@@ -1,0 +1,28 @@
+[Defines]
+  INF_VERSION = 0x00010005
+  BASE_NAME   = myfault
+  FILE_GUID   = 75FEC1B1-435A-45A4-8C4A-FCA58C58751A
+  MODULE_TYPE = DXE_SMM_DRIVER
+  ENTRY_POINT = Install_SMI_Handler
+
+[Sources]
+  myfault.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  DebugLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  BaseLib
+  SmmServicesTableLib
+  SmmMemLib
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid                 AND
+  gEfiSmmSwDispatch2ProtocolGuid
+
+
+[BuildOptions]
+  *_*_*_CC_FLAGS= -O0

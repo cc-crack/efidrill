@@ -1,0 +1,1 @@
+[{"size": 25, "offest": 25, "value_guess": null, "type_guess": "Point"}, {"size": 5, "offest": 5, "value_guess": null, "type_guess": "Point"}, {"size": 17, "offest": 17, "value_guess": null, "type_guess": "Point"}, {"size": 4, "offest": 4, "value_guess": null, "type_guess": "Point"}, {"size": 13, "offest": 13, "value_guess": null, "type_guess": "Point"}]
