@@ -1,9 +1,13 @@
 import copy
+import logging
+
 from efidrill.config import config
 import time
 from efidrill.logging import Logger
 from efidrill.function_var import Var_List
 from efidrill.user_define_work import *
+
+logger = Logger()
 class Function_type:
     def __init__(self, rd_analysis,  start_addr, is_smi=0):
         
@@ -213,11 +217,11 @@ class Function_type:
 
 
         while(self.current_ins_addr <self.end_addr):
-            # print("addr:",hex(self.current_ins_addr))
+            logger.info("addr:" + hex(self.current_ins_addr))
 
             self.ana_ins_addr(self.current_ins_addr, function_deep)
 
-            
+
             self.current_ins_addr = self.rd_analysis.ida_support.get_next_ins_addr(self.current_ins_addr )
 
 

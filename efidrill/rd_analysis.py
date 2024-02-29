@@ -2,6 +2,7 @@ import struct
 from ctypes import *
 import shutil
 import platform
+import traceback
 from efidrill.check_engine import Check_Engine
 from efidrill.ida_work.ida_support import IDA_Support
 from efidrill.mdis.mdis_support import Mdis_Support
@@ -47,6 +48,8 @@ class RD_Analysis:
         return 
     def work(self):
         self.get_smi_ea()
+        logger.info("ttttt")
+        return
 
         while(1):
             if self.check_engine.function_queue.qsize() == 0:
@@ -71,8 +74,13 @@ class RD_Analysis:
             # except:
             #      init_error = 1
             #      print("error init")
-            if not init_error:  
-                ana_function.analysis(function_deep)
+            if not init_error:
+                try:
+                    ana_function.analysis(function_deep)
+                except:
+                    logger.error("Error! Function Analyzer Failed, Function address=="+hex(ana_function.start_addr))
+                    logger.info(traceback.format_exc())
+                    continue
             logger.info("Finish Function Analyzer Success, Function address=="+hex(ana_function.start_addr))
 
         self.pluginmgr.dump_all_log()

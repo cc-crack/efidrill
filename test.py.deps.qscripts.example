@@ -1,0 +1,7 @@
+# Rename it to .py.deps.qscripts and reset the pkgbase path
+
+/pkgbase /Volumes/code/efidrill
+/reload import importlib;import $pkgmodname$;importlib.reload($pkgmodname$)
+
+$pkgbase$/efidrill/rd_analysis.py
+$pkgbase$/efidrill/function_type/function_type.py

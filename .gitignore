@@ -1,6 +1,9 @@
 **/__pycache__
 .env
+.idea
 .DS_Store
+./efidrill/config.json
+test.py.deps.qscripts
 test/biosfiles/*
 test/modules/*
 test/ida.log

@@ -41,10 +41,6 @@ class Efidrill(idaapi.plugin_t):
 # register IDA plugin
 def PLUGIN_ENTRY():
     return Efidrill()
-    
-
-
-
 
 
 
