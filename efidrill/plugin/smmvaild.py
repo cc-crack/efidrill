@@ -124,7 +124,7 @@ class Smm_Vaild(Base_Plugin):
     def add_interesting_memory_map_list(self, current_func, def_var, use_list=[], is_alias=0, default_value={}):
             #logger.info(self.smm_vaild_size[current_func])
             
-            breakpoint()
+            # breakpoint()
             if 'smm_vaild_size' in default_value.keys():
                 self.smm_vaild_size[current_func][def_var] = []
                 self.smm_vaild_size[current_func][def_var].append(default_value['smm_vaild_size'])

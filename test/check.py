@@ -16,7 +16,6 @@ def clean_result():
         if s == "{}":
             dir, name = os.path.split(i)
             shutil.move(dir, dir + "_empty")
-
     os.system(
         f'7z a -tzip -mx=9 {os.path.join(os.path.expanduser(workspace), "empty.zip")} {os.path.join(os.path.expanduser(workspace), "*_empty")}'
     )
@@ -24,3 +23,7 @@ def clean_result():
 
     for directory in directories:
         shutil.rmtree(directory)
+
+if __name__ == "__main__":
+    clean_result()
+    print("cleaned")

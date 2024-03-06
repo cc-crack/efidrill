@@ -3,7 +3,7 @@ from miasm.analysis.machine import Machine
 from miasm.core.bin_stream_ida import bin_stream_ida
 from miasm.analysis.data_flow import DeadRemoval, ReachingDefinitions, DiGraphDefUse
 from future.utils import viewitems, viewvalues
-import os 
+import os
 
 
 loc_db = LocationDB()
@@ -23,7 +23,5 @@ ircfg = lifter.new_ircfg_from_asmcfg(asmcfg)
 for block in viewvalues(ircfg.blocks):
     for test in block:
         print(test)
-        
-        
     break
 

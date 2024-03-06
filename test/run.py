@@ -26,7 +26,3 @@ for file in modules:
     print(cmd_str)
     p = subprocess.Popen(cmd_str, shell=True)
     p.wait()
-
-import check
-
-check.clean_result()

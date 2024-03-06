@@ -1,7 +1,7 @@
 {
     "deep_size": 15,
     "max_function_deep": 5,
-    "workdir": "D://efidrill_workspace/",
+    "workdir": "~/efidrill_workspace/",
     "logging_path":   "efi_digging.log",
     "just_data_taint" : 1,
     "debug_flag": 0,
