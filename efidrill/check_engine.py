@@ -22,7 +22,6 @@ class Check_Engine:
 
             ret_function = function_type(self.rd_analysis, ea, name)
             if ret_function:
-                self.ea_function
                 self.ea_function[ea] = ret_function
 
         return ret_function, is_new

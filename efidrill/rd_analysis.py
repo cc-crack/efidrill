@@ -65,7 +65,6 @@ class RD_Analysis:
                 self.is_all = 1
                 self.pluginmgr.switch_SMI_to_Normal()
                 continue
-            init_error = 0
             # try:
             element = self.check_engine.function_queue.get()
 
@@ -87,16 +86,15 @@ class RD_Analysis:
             # except:
             #      init_error = 1
             #      print("error init")
-            if not init_error:
-                try:
-                    ana_function.analysis(function_deep)
-                except:
-                    logger.error(
-                        "Error! Function Analyzer Failed, Function address=="
-                        + hex(ana_function.start_addr)
-                    )
-                    logger.info(traceback.format_exc())
-                    continue
+            try:
+                ana_function.analysis(function_deep)
+            except:
+                logger.error(
+                    "Error! Function Analyzer Failed, Function address=="
+                    + hex(ana_function.start_addr)
+                )
+                logger.info(traceback.format_exc())
+                continue
             logger.info(
                 "Finish Function Analyzer Success, Function address=="
                 + hex(ana_function.start_addr)
