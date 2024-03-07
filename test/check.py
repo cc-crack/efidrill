@@ -8,7 +8,7 @@ import shutil
 def clean_result():
     workspace = os.path.expanduser("~\\efidrill_workspace")
     for i in glob.glob(
-        os.path.join(os.path.expanduser(workspace), "*\\res.json"), recursive=True
+            os.path.join(os.path.expanduser(workspace), "*\\res.json"), recursive=True
     ):
         with open(i) as f:
             s = f.read()
@@ -23,6 +23,7 @@ def clean_result():
 
     for directory in directories:
         shutil.rmtree(directory)
+
 
 if __name__ == "__main__":
     clean_result()

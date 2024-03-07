@@ -1,7 +1,8 @@
 # NotMyUefiFault
 
 A buggy UEFI application to be used as a sanity test for `efi_fuzz`.\
-Works by reading an NVRAM variable called `FaultType`, and based on its value deliberately generates a specific bug class.
+Works by reading an NVRAM variable called `FaultType`, and based on its value deliberately generates a specific bug
+class.
 
 ## Fault types
 
@@ -28,10 +29,10 @@ Below is a curated list of possible values for the `FaultType` variable:
 ## Fuzzing
 
 1. Create a directory with the fuzzing seeds:\
-`mkdir -p afl_inputs/FaultType`\
-`echo -ne "\xFF\xFF\xFF\xFF" > afl_inputs/FaultType/FaultType_0`
+   `mkdir -p afl_inputs/FaultType`\
+   `echo -ne "\xFF\xFF\xFF\xFF" > afl_inputs/FaultType/FaultType_0`
 2. Fire off the fuzzer:\
-`afl-fuzz -T NotMyUefiFault -i afl_inputs/FaultType/ -o afl_outputs/ -U -- python efi_fuzz.py NotMyUefiFault/bin/NotMyUefiFault.efi nvram.pickle FaultType @@`
+   `afl-fuzz -T NotMyUefiFault -i afl_inputs/FaultType/ -o afl_outputs/ -U -- python efi_fuzz.py NotMyUefiFault/bin/NotMyUefiFault.efi nvram.pickle FaultType @@`
 
 ![](../images/NotMyUefiFault.png)
 
