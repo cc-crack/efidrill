@@ -7,11 +7,12 @@ from efidrill.rd_analysis import RD_Analysis
 from efidrill.result import res
 
 
-class efidrill_test:
+class EfidrillTest:
     def __init__(self) -> None:
         pass
 
-    def run(self):
+    @staticmethod
+    def run():
         config.init_dump_file_path()
         Logger(log_file=os.path.join(config.dump_file_path, config.logging_path))
         a = RD_Analysis()
@@ -22,4 +23,4 @@ class efidrill_test:
 
 if __name__ == "__main__":
     DBG()
-    efidrill_test().run()
+    EfidrillTest().run()
