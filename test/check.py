@@ -8,7 +8,7 @@ import shutil
 def clean_result():
     workspace = os.path.expanduser("~\\efidrill_workspace")
     for i in glob.glob(
-            os.path.join(os.path.expanduser(workspace), "*\\res.json"), recursive=True
+        os.path.join(os.path.expanduser(workspace), "*\\res.json"), recursive=True
     ):
         with open(i) as f:
             s = f.read()

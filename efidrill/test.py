@@ -24,4 +24,3 @@ for block in viewvalues(ircfg.blocks):
     for test in block:
         print(test)
     break
-

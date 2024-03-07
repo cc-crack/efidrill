@@ -14,16 +14,15 @@ def get_random_point():
 def get_seed(fuzz_struct):
     for struct_dict in fuzz_struct:
         payload = b""
-        if struct_dict['type_guess'] == 'Point':
-            for i in range(int(struct_dict['size'] / 8)):
+        if struct_dict["type_guess"] == "Point":
+            for i in range(int(struct_dict["size"] / 8)):
                 payload += get_random_point()
-            ql.mem.write(0x7000 + struct_dict['offset'], payload)
-
+            ql.mem.write(0x7000 + struct_dict["offset"], payload)
 
         else:
-            for i in range(struct_dict['size']):
+            for i in range(struct_dict["size"]):
                 payload += get_random_bytes()
-            ql.mem.write(0x7000 + struct_dict['offset'], payload)
+            ql.mem.write(0x7000 + struct_dict["offset"], payload)
 
 
 def fuzz_smi():

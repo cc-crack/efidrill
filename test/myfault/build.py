@@ -3,7 +3,9 @@ import subprocess
 
 
 def check_edk2build_image(img_name):
-    process = subprocess.Popen(["docker", "images", f"{img_name}"], stdout=subprocess.PIPE)
+    process = subprocess.Popen(
+        ["docker", "images", f"{img_name}"], stdout=subprocess.PIPE
+    )
     output, _ = process.communicate()
     output = output.decode()
     print(output)
