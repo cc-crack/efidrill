@@ -1,6 +1,7 @@
 # Efidrill ——Automated Hunting UEFI Firmware Vulnerability through Data-Flow Analysis
 
-UEFI一直是电脑启动的早期阶段，针对UEFI的攻击可以破坏电脑启动的Secure Boot机制，从而插入UEFI Rootkit。由于这类Rootkit存在于SMM或者BootLoader中，因此可以长期隐秘的控制受害者的电脑。
+UEFI一直是电脑启动的早期阶段，针对UEFI的攻击可以破坏电脑启动的Secure Boot机制，从而插入UEFI
+Rootkit。由于这类Rootkit存在于SMM或者BootLoader中，因此可以长期隐秘的控制受害者的电脑。
 
 在过去的几年中，随着针对UEFI的安全研究不断进行，安全研究者发现了许多SMM漏洞，这也进一步提升了UEFI的安全性，诸如efiexplorer等工具的问世，也极大的简化了UEFI固件的逆向成本。
 
