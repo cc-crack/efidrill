@@ -1,9 +1,10 @@
+import os
+
+from efidrill.config import config
+from efidrill.debug import DBG
+from efidrill.logging import Logger
 from efidrill.rd_analysis import RD_Analysis
 from efidrill.result import res
-from efidrill.config import config
-from efidrill.logging import Logger
-from efidrill.debug import DBG
-import os
 
 
 class efidrill_test:
