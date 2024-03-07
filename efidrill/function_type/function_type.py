@@ -251,7 +251,7 @@ class Function_type:
 
     def analysis(self, function_deep):
 
-        self.check_insteresting_variables()
+        self.check_interesting_variables()
 
         while self.current_ins_addr < self.end_addr:
 
@@ -261,7 +261,7 @@ class Function_type:
                 self.current_ins_addr
             )
 
-    def check_insteresting_variables(self):
+    def check_interesting_variables(self):
         if self.rd_analysis.function_callback.user_def_check(self):
             return
         # Find the initial positions of all variables that interest us during the initialization phase
