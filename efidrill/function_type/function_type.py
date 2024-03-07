@@ -254,7 +254,6 @@ class Function_type:
         self.check_insteresting_variables()
 
         while self.current_ins_addr < self.end_addr:
-            logger.info("addr:" + hex(self.current_ins_addr))
 
             self.ana_ins_addr(self.current_ins_addr, function_deep)
 
