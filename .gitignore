@@ -1,6 +1,7 @@
 **/__pycache__
 .env
 .idea
+.run
 .DS_Store
 test.py.deps.qscripts
 test/biosfiles/*
