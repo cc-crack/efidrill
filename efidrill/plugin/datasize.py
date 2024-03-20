@@ -46,7 +46,7 @@ class Datasize(Base_Plugin):
         if self.rd_analysis.ida_support.is_call_name(
             current_func.current_ins_addr, "GetVariable"
         ):
-            datasize_var, search_address = self.search_datasize()
+            datasize_var, search_address = self.search_datasize(current_func)
             if datasize_var == None:
                 logger.error("some error in GetVariable" + hex(current_address))
                 return
@@ -90,6 +90,8 @@ class Datasize(Base_Plugin):
                     )
 
                     if stack_offest:
+                        if current_func not in self.data_size_offest:
+                            self.data_size_offest[current_func] = {}
                         if stack_offest in self.data_size_offest[
                             current_func
                         ] and not self.rd_analysis.function_support.get_value_guess(
