@@ -22,12 +22,12 @@ class Base_Plugin:
 
             offset, is_mem = self.rd_analysis.mdis_support.search_int(use_var[0])
 
-            if offset:
+            if offset is not None:
 
                 return offset, use_var, 1
         for def_var in def_list:
             offset, is_mem = self.rd_analysis.mdis_support.search_int(def_var[0])
-            if offset:
+            if offset is not None:
 
                 return offset, def_var, 0
         return None, None, 0

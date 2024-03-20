@@ -56,7 +56,7 @@ class Var_List:
 
             self.init_var(def_var, is_alias)
 
-            search_offset = 0
+            search_offset = None
             register_list = []
 
             for use_var in use_list:
@@ -70,7 +70,7 @@ class Var_List:
                     )
                     break
 
-            if search_offset:
+            if search_offset is not None:
 
                 for use_var in use_list:
                     if use_var not in self.var_list:

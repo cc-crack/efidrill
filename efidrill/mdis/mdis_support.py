@@ -148,9 +148,13 @@ class Mdis_Support:
 
     def search_int(self, exp_ir):
         has_register = 0
-        offset = 0
+        offset = None
         if type(exp_ir) == ExprMem:
             exp_ir = exp_ir.get_arg()
+            if type(exp_ir) == ExprId:
+                offset = 0
+                has_register = 1
+                return offset, has_register
 
         if type(exp_ir) == ExprOp:
 
@@ -164,4 +168,4 @@ class Mdis_Support:
 
                 if has_register:
                     return offset, 1
-        return 0, 0
+        return None, 0
