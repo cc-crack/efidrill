@@ -163,6 +163,10 @@ class Smm_Vaild(Base_Plugin):
     ):
         # logger.info(self.smm_vaild_size[current_func])
 
+        if current_func not in self.smm_vaild_size.keys():
+            self.smm_vaild_size[current_func] = {}
+        if def_var not in self.smm_vaild_size[current_func].keys():
+            self.smm_vaild_size[current_func][def_var] = []
         # breakpoint()
         if "smm_vaild_size" in default_value.keys():
             self.smm_vaild_size[current_func][def_var] = []
