@@ -1,4 +1,3 @@
-import angr
 from efidrill.function_type.function_type import Function_type
 from efidrill.config import config
 
