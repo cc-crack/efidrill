@@ -43,6 +43,10 @@ class Toctou(Base_Plugin):
                 continue
             if use_var[0].name not in call_register_name:
                 continue
+
+            if current_func not in self.toctou_mmap.keys():
+                self.toctou_mmap[current_func] = {}
+
             if use_var not in self.toctou_mmap[current_func].keys():
                 continue
 
@@ -78,6 +82,12 @@ class Toctou(Base_Plugin):
     def add_interesting_memory_map_list(
         self, current_func, def_var, use_list=[], is_alias=0, default_value={}
     ):
+
+        if current_func not in self.toctou_mmap.keys():
+            self.toctou_mmap[current_func] = {}
+        if def_var not in self.toctou_mmap[current_func].keys():
+            self.toctou_mmap[current_func][def_var] = []
+
         if "toctou" in default_value.keys():
             self.toctou_mmap[current_func][def_var] = []
             self.toctou_mmap[current_func][def_var].append(default_value["toctou"])
