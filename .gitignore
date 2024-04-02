@@ -1,6 +1,7 @@
 **/__pycache__
 .env
 .idea
+.fleet
 .run
 .DS_Store
 test.py.deps.qscripts

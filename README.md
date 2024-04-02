@@ -1,93 +1,173 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 <div align="center">
-<img src=./icon/logo.png width=30%>
+<img src=./icon/logo.png width=30% alt="EFIDrill Logo">
 </div>
 
-**Efidrill** - IDA plugin for UEFI firmware vulnerability hunting base on data flow analysis
+**EFIDrill** - IDA plugin for UEFI firmware vulnerability hunting base on data flow analysis
 
-__Supported versions of IDA:__ Well tested on IDA pro 8.2
+**Supported versions of IDA:** Well tested on IDA pro 8.2 and 8.3
 
-__Supported Platforms:__ Windows, Linux and OSX.
+**Supported Platforms:** Windows, Linux and OS X
 
 ## Plugin installation
 
-1. `git clone https://git.csl.secx/bios-research/efidrill.git`
-2. `ln -s {efidrill path}/efidrill.py ~/.idapro/plugin/`
-3. `ln -s {efidrill path}/efidrill ~/.idapro/plugin/`
+### Linux / OS X
 
-## Configeration
+1. `git clone https://github.com/cc-crack/efidrill.git`
+2. `ln -s <EFIDRILL_PATH>/efidrill.py <IDA_DIR>/plugins`
+3. `ln -s <EFIDRILL_PATH>/efidrill <IDA_DIR>/plugins`
 
-TODO:
+### Windows
 
-## 目录结构
+1. `git clone https://github.com/cc-crack/efidrill.git`
+2. `mklink <IDA_DIR>\plugins\efidrill.py <EFIDRILL_PATH>\efidrill.py`
+3. `mklink <IDA_DIR>\plugins\efidrill <EFIDRILL_PATH>\efidrill`
 
-    RD_Analysis 主程序
-    ida_support ida 相关支持封装
-    check_engine 漏洞分析引擎，里面加载了所有漏洞分析插件，并且会进行函数类的初始化
-    function_type 针对不同函数的处理类的封装，并且会初始化smram外部输入数据
-    check_work_plugin 所有分析插件
-    mdis 可达定义分析的实现库，封装了mdisam
-    mdis_engine 生成use def 的引擎
-    mdis_support 封装ir处理的文件
+## Configuration
 
-## 重要结构体
+configurations of EFIDrill
+are in [config.json](efidrill/config.json.template),
+you can modify it to fit your needs.
 
-        self.interesting_op_list 存储所有感兴趣的内容 [def_var]（toctou只有-1一个元素说明，当前变量不分析toctou）
-        self.all_uses, self.all_defs 存储所有 use def {address:[define]}
-        self.current_ins_addr 当前分析地址
-        self.ircfg 当前 ir
-        self.mmap_ir_address ir地址和address的映射[(block_index,assm_index),address]
-        变量 (mdiasm_struct,address)
-        miasm中的变量 (mdiasm_struct,(block_index,assm_index))
-    
-        
-        mdiasm结构体 存储各种op，id（寄存器），int，mem，参考链接： https://miasm.re/miasm_doxygen/classmiasm_1_1expression_1_1expression_1_1_expr_mem.html
+It locates in the same directory as the plugin.
 
-## 如何实现一个插件
+### Template
 
-        继承check_work_plugin
-        add_interesting_memory_map_list函数会在一个新的def被加入感兴趣的变量中时被调用， 并且use_list是调用def时感兴趣的use_list，is_alias是判断这个变量是否是一个变量的别名
-        vulnerability_find在每一条地址都会执行，use_list是该地址使用的所有感兴趣的变量，def_list是该地址定义的所有变量
-        注意，因为一个def_var会对应多个use_var所以变量赋值需要以def_var对use_list的列表映射
+We provide a template for you to modify:
 
-## RD问题说明
+```json
+{
+  "deep_size": 15,
+  "max_function_deep": 5,
+  "workdir": "~/efidrill_workspace/",
+  "logging_path": "efi_digging.log",
+  "just_data_taint": 1,
+  "debug_flag": 0,
+  "to_ui": 1,
+  "res_filename": "res.json"
+}
+```
 
-        请注意 toctou和struct插件不是rd问题，所以存在路径爆炸（他的栈深度不会超过最大限制），其他问题是rd问题，所以不存在路径爆炸问题
+### Configuration items
 
-## 重要函数
+- `deep_size`: The maximum number of instructions to be analyzed in a function.
+- `max_function_deep`: The maximum recursive depth of functions to be analyzed.
+- `workdir`: The directory where the analysis results and artifacts are stored.
+- `logging_path`: The path of the log file.
+- `just_data_taint`: Whether to perform only data taint analysis.
+- `debug_flag`: Whether to enable debug mode.
+- `to_ui`: Whether to output the analysis results to the UI of IDA Pro.
+- `res_filename`: The name of the analysis result file.
 
-       mmap_ir_to_address 映射 字典中的ir地址和地址
-       check_insteresting_variables 找到感兴趣的变量（0x40e，readsavesatate， commbuffer）不同函数不同
-       ana_ins_addr 分析每一条汇编
-       add_interesting_memory_map_list 向interesting_op_list 添加新的define
-       vulnerability_find check_engine引擎，调用所有插件
-       fix_use 找到远跳use(def不在当前函数中), 远跳块ir地址为（-1，-1），地址为-1
-       get_def 生成def
+## Directory structure
+
+```text
+|   check_engine.py #Loaded with all plug-ins and initializes function classes
+|   config.json.template
+|   config.py
+|   debug.py
+|   function_support.py
+|   function_var.py
+|   logging.py
+|   plugin_mgr.py
+|   rd_analysis.py  #Main program
+|   result.py
+|   test.py
+|   user_define_work.py
+|   __init__.py
+|
++---arch
+|       x64.py
+|
++---function_type   #processing classes for different functions
+|       child_smi.py
+|       find_entry_point.py
+|       function_ana_loader.py
+|       function_type.py    #SMRAM external input data is initialized here
+|       sub_function.py
+|       sw_smi.py
+|
++---ida_work
+|       ida_support.py  #Encapsulation of the IDA library
+|
++---mdis    #library that reaching definition analysis and encapsulates miasm
+|       mdis_engine.py  #Generate use def engine
+|       mdis_support.py #Encapsulate files processed by IR
+|       ReachingDefinitionscfg.py
+|       ReachingDefinitionsvar.py
+|
+\---plugin  #All analysis plug-ins
+        base_plugin.py
+        callout.py
+        datasize.py
+        global_var.py
+        indirect_call.py
+        memcopy.py
+        smmvaild.py
+        struct_build.py
+        toctou.py
+```
+
+## Important structures
+
+* **Function_type.interesting_op_list:** Store all the content of interest [def_var] (toctou only has a -1 element
+  description, the current variable does not analyze toctou).
+* **Function_type.all_uses, Function_type.all_defs:** Store all use def {address:[define]}.
+* **Function_type.current_ins_addr:** The address of the current analysis.
+* **Function_type.ircfg:** Current IR.
+* **Function_type.mmap_ir_address:** Mapping of IR addresses and addresses: [(block_index,assm_index),address].
+* **variable:** (miasm_struct,address).
+* **Variables in miasm:** (miasm_struct,(block_index,assm_index)).
+* **[miasm structure:](https://miasm.re/miasm_doxygen/classmiasm_1_1expression_1_1expression_1_1_expr_mem.html)** Stores
+  various OP, ID (registers), int, MEM.
+
+## Implement a custom plugin
+
+1. Inherit the Base_Plugin class in the efidrill/plugin/base_plugin.py file.
+2. The add_interesting_memory_map_list function is called when a new def is added to the list of interesting variables,
+   and use_list is the use_list of interest when calling the def, is_alias indicates whether this variable is an alias
+   for another variable.
+3. vulnerability_find is executed at each address, use_list is all the variables of interest used by that address, and
+   def_list is all variables defined by that address.
+   > Note that since one def var corresponds to multiple use vars, variable assignment requires a list mapping of def
+   var to use list.
+
+## Reaching definition(RD) problem
+
+Note that the toctou and struct plugins do not have RD issues, so there is a path explosion (his stack depth does not
+exceed the maximum limit), and the other plugins have RD issues, so there is no path explosion problem.
+
+## Important functions
+
+* mmap_ir_to_address: map intermediate representation (IR) addresses to actual addresses in a binary file.
+* check_interesting_variables: Find the variables of interest (0x40e,readsavesatate, commbuffer), different functions
+  have different variables of interest.
+* ana_ins_addr: Analyze each assembly instruction.
+* add_interesting_memory_map_list: Add new define to the interesting_op_list.
+* vulnerability_find: Call all plug-ins.
+* fix_use: Find the far jump use(def is not in the current function), the address of the far jump block ir is (-1,-1),
+  and the actual address is -1.
+* get_def: generate def.
 
 ## TODO list
 
-    写一个Fuzz模块
+* UEFI Firmware Library and Automated Analysis
+* Cross Architecture(ARM,MIPS,...)
+* Variable Value Prediction Improve
+* Writing a Fuzz Module
 
 ## Can Do List
 
-    datasize处理 栈别名问题
-    启发表达式跳转判断不全
+* datasize handling stack aliasing issues
+* Incomplete judgment of heuristic expression jump
 
-## 目前不完备的假设
+## Incomplete hypothesis at present
 
-    SMRAM越界访问最安全假设：一个函数将rcx作为外部输入我们假定他是调用，无论实际与否（可能漏报）
-    外部数据地址假定：一个数据只要从外部而来，我们不考虑本身PC中的内存位置与SMM的位置（可能误报）
-
-## Test cases build
-
-### upload
-
-https://nas01.csl.secx/sharing/ERaoFgUK3
-
-### download
-
-http://192.168.51.155:9999/
+* The safest assumption for SMRAM out-of-bounds access: a function takes rcx as external input and we assume that it is
+  called, whether it is actual or not (_possibly false positives_).
+* The external data address assumes that as long as a data comes from outside, we do not consider the memory location
+  and SMM location in our PC (_possibly false positives_).
 
 ## Running test
 
@@ -106,6 +186,9 @@ If everything is done, you can find the result in your workspace folder.
 Xuxiang Yang, Security researcher @ Security Lab GIC Lenovo
 
 Qingzhe Jiang, Security researcher, Manager, @ Security Lab GIC Lenovo
+
+Weixiao Ji, Security researcher @ Security Lab GIC Lenovo
+
 
 ### Thanks
 
