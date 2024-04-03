@@ -189,7 +189,6 @@ Qingzhe Jiang, Security researcher, Manager, @ Security Lab GIC Lenovo
 
 Weixiao Ji, Security researcher @ Security Lab GIC Lenovo
 
-
 ### Thanks
 
 Zhaoxing Sun helps to do some tests.
