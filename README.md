@@ -6,7 +6,7 @@
 
 **EFIDrill** - IDA plugin for UEFI firmware vulnerability hunting base on data flow analysis
 
-**Supported versions of IDA:** Well tested on IDA pro 8.2 and 8.3
+**Supported versions of IDA:** Well tested on [IDA pro](https://hex-rays.com/ida-pro/) 8.2 and 8.3
 
 **Supported Platforms:** Windows, Linux and OS X
 
@@ -26,7 +26,7 @@
 
 ## Configuration
 
-configurations of EFIDrill
+Configurations of EFIDrill
 are in [config.json](efidrill/config.json.template),
 you can modify it to fit your needs.
 
@@ -111,24 +111,24 @@ We provide a template for you to modify:
 
 ## Important structures
 
-* **Function_type.interesting_op_list:** Store all the content of interest [def_var] (toctou only has a -1 element
+* `Function_type.interesting_op_list`: Store all the content of interest `def_var` (toctou only has a -1 element
   description, the current variable does not analyze toctou).
-* **Function_type.all_uses, Function_type.all_defs:** Store all use def {address:[define]}.
-* **Function_type.current_ins_addr:** The address of the current analysis.
-* **Function_type.ircfg:** Current IR.
-* **Function_type.mmap_ir_address:** Mapping of IR addresses and addresses: [(block_index,assm_index),address].
-* **variable:** (miasm_struct,address).
-* **Variables in miasm:** (miasm_struct,(block_index,assm_index)).
-* **[miasm structure:](https://miasm.re/miasm_doxygen/classmiasm_1_1expression_1_1expression_1_1_expr_mem.html)** Stores
-  various OP, ID (registers), int, MEM.
+* `Function_type.all_uses`, `Function_type.all_defs`: Store all use def `{address:define}`.
+* `Function_type.current_ins_addr`: The `address` of the current analysis.
+* `Function_type.ircfg`: Current `IR`.
+* `Function_type.mmap_ir_address`: Mapping of IR addresses and addresses: `(block_index,assm_index), address`.
+* `variable`: `{miasm_struct,address}`.
+* `Variables in miasm`: `{miasm_struct,(block_index,assm_index)}`.
+* [`miasm structure`:](https://miasm.re/miasm_doxygen/classmiasm_1_1expression_1_1expression_1_1_expr_mem.html) Stores
+  various `OP`, `ID` (registers), `int`, `MEM`.
 
 ## Implement a custom plugin
 
-1. Inherit the Base_Plugin class in the efidrill/plugin/base_plugin.py file.
-2. The add_interesting_memory_map_list function is called when a new def is added to the list of interesting variables,
+1. Inherit the Base_Plugin class in the [base_plugin.py](efidrill/plugin/base_plugin.py) file.
+2. The [add_interesting_memory_map_list](efidrill/plugin/base_plugin.py) function is called when a new def is added to the list of interesting variables,
    and use_list is the use_list of interest when calling the def, is_alias indicates whether this variable is an alias
    for another variable.
-3. vulnerability_find is executed at each address, use_list is all the variables of interest used by that address, and
+3. [vulnerability_find](efidrill/plugin/base_plugin.py) is executed at each address, use_list is all the variables of interest used by that address, and
    def_list is all variables defined by that address.
    > Note that since one def var corresponds to multiple use vars, variable assignment requires a list mapping of def
    var to use list.
@@ -140,15 +140,15 @@ exceed the maximum limit), and the other plugins have RD issues, so there is no 
 
 ## Important functions
 
-* mmap_ir_to_address: map intermediate representation (IR) addresses to actual addresses in a binary file.
-* check_interesting_variables: Find the variables of interest (0x40e,readsavesatate, commbuffer), different functions
+* `mmap_ir_to_address`: map intermediate representation (IR) addresses to actual addresses in a binary file.
+* `check_interesting_variables`: Find the variables of interest (0x40e,readsavesatate, commbuffer), different functions
   have different variables of interest.
-* ana_ins_addr: Analyze each assembly instruction.
-* add_interesting_memory_map_list: Add new define to the interesting_op_list.
-* vulnerability_find: Call all plug-ins.
-* fix_use: Find the far jump use(def is not in the current function), the address of the far jump block ir is (-1,-1),
+* `ana_ins_addr`: Analyze each assembly instruction.
+* `add_interesting_memory_map_list`: Add new define to the interesting_op_list.
+* `vulnerability_find`: Call all plug-ins.
+* `fix_use`: Find the far jump use(def is not in the current function), the address of the far jump block ir is (-1,-1),
   and the actual address is -1.
-* get_def: generate def.
+* `get_def`: generate def.
 
 ## TODO list
 
