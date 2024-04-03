@@ -181,7 +181,7 @@ exceed the maximum limit), and the other plugins have RD issues, so there is no 
 
 If everything is done, you can find the result in your workspace folder.
 
-### Credit
+## Credit
 
 Xuxiang Yang, Security researcher @ Security Lab GIC Lenovo
 
@@ -189,7 +189,7 @@ Qingzhe Jiang, Security researcher, Manager, @ Security Lab GIC Lenovo
 
 Weixiao Ji, Security researcher @ Security Lab GIC Lenovo
 
-### Thanks
+## Thanks
 
 Zhaoxing Sun helps to do some tests.
 
