@@ -125,10 +125,12 @@ We provide a template for you to modify:
 ## Implement a custom plugin
 
 1. Inherit the Base_Plugin class in the [base_plugin.py](efidrill/plugin/base_plugin.py) file.
-2. The [add_interesting_memory_map_list](efidrill/plugin/base_plugin.py) function is called when a new def is added to the list of interesting variables,
+2. The [add_interesting_memory_map_list](efidrill/plugin/base_plugin.py) function is called when a new def is added to
+   the list of interesting variables,
    and use_list is the use_list of interest when calling the def, is_alias indicates whether this variable is an alias
    for another variable.
-3. [vulnerability_find](efidrill/plugin/base_plugin.py) is executed at each address, use_list is all the variables of interest used by that address, and
+3. [vulnerability_find](efidrill/plugin/base_plugin.py) is executed at each address, use_list is all the variables of
+   interest used by that address, and
    def_list is all variables defined by that address.
    > Note that since one def var corresponds to multiple use vars, variable assignment requires a list mapping of def
    var to use list.
