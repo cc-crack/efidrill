@@ -196,3 +196,9 @@ Weixiao Ji, Security researcher @ Security Lab GIC Lenovo
 Zhaoxing Sun helps to do some tests.
 
 Xiaomin Li helps to create the project logo.
+
+## Ref
+
+BH Asia 2024 arsenal: 
+
+https://www.blackhat.com/asia-24/arsenal/schedule/#efidrill-automated-hunting-uefi-firmware-vulnerability-through-data-flow-analysis-36764
